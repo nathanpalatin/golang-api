@@ -2,7 +2,7 @@ package main
 
 import (
 	"apigo/controller"
-	"net/http"
+	usecase "apigo/use-cases"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,16 +12,12 @@ import (
 func main() {
 
 	server := gin.Default()
-
-	UserController := controller.NewUserController()
-
-	server.GET("/", func(context *gin.Context) {
-		context.JSON(http.StatusOK, gin.H{
-      "message": "Hello, World!",
-    })
-	})
+	UserUseCase := usecase.NewUserUseCase()
+	UserController := controller.NewUserController(UserUseCase)
 
 	server.GET("/users", UserController.GetUsers)
 
 	server.Run(":3333")
+
+
 }

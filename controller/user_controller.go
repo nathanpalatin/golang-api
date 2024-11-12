@@ -2,17 +2,20 @@ package controller
 
 import (
 	"apigo/model"
+	usecase "apigo/use-cases"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 type userController struct {
-
+	userUseCase usecase.User
 }
 
-func NewUserController() userController {
-	return userController{}
+func NewUserController(usecase usecase.User) userController {
+	return userController{
+		userUseCase: usecase,
+	}
 }
 
 func (p *userController) GetUsers(ctx *gin.Context){
