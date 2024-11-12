@@ -1,0 +1,10 @@
+services:
+  go_db:
+    container_name: go_api
+    image: bitnami/postgresql:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_DATABASE=go_api

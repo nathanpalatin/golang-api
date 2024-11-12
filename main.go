@@ -1,35 +1,22 @@
 package main
 
 import (
-	"errors"
-	"fmt"
 	"net/http"
-	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
+
+
 func main() {
-	mux := http.NewServeMux()
 
-	mux.HandleFunc(
-		"/",
-		func(w http.ResponseWriter, r *http.Request) {
-			fmt.Fprintln(w, "Hello nathan")
-		},
-	)
-	srv := &http.Server{
-		Addr:                         ":8080",
-		Handler:                      mux,
-		DisableGeneralOptionsHandler: false,
-		ReadTimeout:                  10 * time.Second,
-		WriteTimeout:                 10 * time.Second,
-		IdleTimeout:                  1 * time.Minute,
-	}
+	server := gin.Default()
 
-	if err := srv.ListenAndServe(); err != nil {
-		if !errors.Is(err, http.ErrServerClosed) {
-			panic(err)
-		}
-	}
+	server.GET("/", func(context *gin.Context) {
+		context.JSON(http.StatusOK, gin.H{
+      "message": "Hello, World!",
+    })
+	})
 
-	fmt.Println(1)
+	server.Run(":3333")
 }
